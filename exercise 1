@@ -1,0 +1,18 @@
+First exercise:
+
+In this exercise we have a function named id_to_fruit which has two arguments with different data types, one is int and the other is a set. Set is an unordered collection of data type that is iterable therefore the order of elements in a set is not guaranteed to be the same as the order in which they were added. iterating through them using a loop may not follow a specific order.
+Solution :
+we can simply replace set with list since they can be iterated in order and use index to loop
+
+def id_to_fruit(fruit_id: int, fruits: list[str]) -> str:
+	idx = 0
+	for fruit in fruits:
+		if fruit_id == idx:
+			return fruit
+		idx += 1
+	raise RuntimeError(f"Fruit with id {fruit_id} does not exist")
+
+print(id_to_fruit(0,["apple", "orange", "melon", "kiwi", "strawberry"]));
+
+
+If we simply convert the set to list inside the function by using fruits_list=list(fruits) the order of elements in the list might differ each time the code runs because sets do not maintain the order. Since the order is important here we should just use list from the beginning.
