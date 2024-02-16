@@ -1,0 +1,13 @@
+Fourth exercise:
+
+It’s been stated that there are two bugs withing the code. As for the cosmetic issue I believe having time.sleep() in the main thread of GUI isn’t the
+brightest idea since it can block the the main thread and cause the unresponsiveness.
+As for the structural bug changing the batch size from 32 to 64 cause this error “ Using a target size (torch.Size([128, 1])) that is different to the input
+size (torch.Size([96, 1])) is deprecated. Please ensure they have the same size”. This error occur on this line loss_discriminator =
+loss_function(output_discriminator, all_samples_labels), it seems that after awhile output discriminator and all samples labels differ in size.
+
+Solution:
+Having a dynamic approach that helps changing the size accordingly instead of a hard-coded size can help produce better outcomes. Both output
+discriminator and all samples labels should relate to the batch size. For Discriminator class I replaced x = x.view(x.size(0), 784) with x = x.view(x.size(0),
+-1) since according to the Pytorch documents “When the weight matrices or shapes of the input and output of deep neural networks become
+confusing then passing -1 for one of the dimensions saves us from all the mind-boggling shapes of the tensors.”
