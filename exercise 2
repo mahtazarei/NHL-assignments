@@ -1,0 +1,39 @@
+Second exercise:
+
+Here we have a numpy array with the following structure : 
+[[x11, y11, x12, y12, classid1],
+[x21, y21, x22, y22, classid2],
+...
+[xn1, yn1, xn2, yn2, classid3]]
+our goal is to swap x and y but there is an issue with this line :
+coords[:, 0], coords[:, 1], coords[:, 2], coords[:, 3], = coords[:, 1], coords[:, 1], coords[:, 3], coords[:, 2]
+
+The issue with these kinds of assignments is that they evaluate the right side of the expression first, then make the assignment. As a result, the same value is assigned to several columns.
+Another mistake is that coords[:, 1] has been written two times while the first column (coords[:, 0]) has been left out.
+
+Solution:
+
+import numpy as np
+
+def swap(coords: np.ndarray):
+	coords[:, 0], coords[:, 1], coords[:, 2], coords[:, 3], = coords[:, 1].copy(), coords[:, 0].copy(), coords[:, 3].copy(), coords[:, 2].copy()
+	return coords
+
+coords = np.array([[10, 5, 15, 6, 0],
+		       [11, 3, 13, 6, 0],
+		       [5, 3, 13, 6, 1],
+		       [4, 4, 13, 6, 1],
+		       [6, 5, 13, 16, 1]])
+swapped_coords = swap(coords)
+print(swapped_coords)
+
+
+Independent copies of the values in the designated columns will be produced by including the copy() method. This guarantees that the values are switched appropriately.
+
+Result:
+
+[[ 5 10 6 15 0]
+[ 3 11 6 13 0]
+[ 3 5 6 13 1]
+[ 4 4 6 13 1]
+[ 5 6 16 13 1]]
